@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Square Calculator</title>
+  <style>
+    body {
+      background-color: #F0FAFF;
+      font-family: Calibri, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h2 {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 280px;
+      padding: 8px;
+      font-size: 18px;
+      text-align: center;
+    }
+    button {
+      background-color: #B5E8FF;
+      border: none;
+      font-size: 18px;
+      padding: 8px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 18px;
+      font-size: 20px;
+    }
+    img {
+      max-width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <img src="Squared.gif" alt="Class Art" />
+  <h2>Enter Numbers (space-separated):</h2>
+  <input type="text" id="numberInput" placeholder="e.g. 2 4 6 8" />
+  <br />
+  <button onclick="calculateSquares()">Calculate Squares</button>
+
+  <div class="result" id="resultDisplay">...</div>
+
+   
+  <script>
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ms-MY"; // Use "en-US" for English accent
+      speechSynthesis.speak(utterance);
+    }
+
+    function calculateSquares() {
+      const input = document.getElementById("numberInput").value.trim();
+      const result = document.getElementById("resultDisplay");
+
+      if (!input) {
+        const msg = "Please enter some numbers.";
+        result.textContent = msg;
+        result.style.color = "orange";
+        speak(msg);
+        return;
+      }
+
+      try {
+        const nums = input.split(" ").map(n => {
+          const num = parseInt(n);
+          if (isNaN(num)) throw new Error("Non-integer detected");
+          return num;
+        });
+
+        const squares = nums.map(n => n * n);
+        const msg = `Squared: [${squares.join(", ")}]`;
+        result.textContent = msg;
+        result.style.color = "darkgreen";
+        speak(msg);
+      } catch {
+        const msg = "Invalid input. Use integers only.";
+        result.textContent = msg;
+        result.style.color = "red";
+        speak(msg);
+      }
+    }
+  </script>
+  <div style="height:40px;"></div>
+<footer class="mt-2" style="color:gray; font-style:italic; font-size:14px;">
+@Koleksi77
+</footer>
+
+</body>
+</html>
